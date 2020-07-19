@@ -74,14 +74,34 @@ fi
 AC_MSG_RESULT(with SIMD insttruction set ... ${with_simd_inst_set})
 AC_DEFINE_UNQUOTED([SIMD_INST_SET],[$SIMD_INST_SET],[Instruction set to be used])
 
+#real type to be used
+AC_ARG_WITH(real-type,
+	AS_HELP_STRING([--with-real-type=type],[Select the type used for real number: float, double (default) or quadruple]),
+	with_real_type="${withval}",
+	with_real_type=double)
+case "$with_real_type" in
+     float) REAL=float;;
+     double) REAL=double
+     	     SIMD_SUFF=d;;
+     quad) REAL=__float128
+     	   LIBS="$LIBS -lquadmath";;
+      *) AC_MSG_ERROR(["Unkwnown real type ${withval}"])
+esac
+
+if test "REAL" == "__float128" -a "$SIMD_INST_SET" != "NONE"
+then
+	AC_MSG_ERROR(["Cannot vectorize quadruple precision"])
+fi
+
+AC_MSG_RESULT(with real type ... ${with_real_type})
+AC_DEFINE_UNQUOTED([REAL],[$REAL],[Data type for real number])
+AC_DEFINE_UNQUOTED([SIMD_SUFF],[$SIMD_SUFF],[Suffix for simd data type])
 
 #openMP
 AC_OPENMP
 CFLAGS="$CXXFLAGS $OPENMP_CFLAGS"
 CPPFLAGS="$CPPFLAGS $OPENMP_CPPFLAGS"
 CXXFLAGS="$CXXFLAGS $OPENMP_CXXFLAGS"
-
-CXXFLAGS="-O3 $CXXFLAGS"
 
 AC_CONFIG_FILES(Makefile bin/Makefile)
 
