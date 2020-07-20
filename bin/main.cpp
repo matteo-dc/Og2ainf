@@ -24,8 +24,8 @@
 #include "simd.hpp"
 
 #define EulerGamma 0.5772156649015329
-#define F0 4.36923
-#define Z0 0.154933
+#define F0 4.3692252338748
+#define Z0 0.1549333902311
 
 array<Real,4> p;
 Real P2;
@@ -291,7 +291,7 @@ int main(int narg,char **arg)
   cout<<"Vectorization with N = "<<N<<endl;
   cout<<endl;
   cout<<"Real type: "<<TO_STRING(REAL)<<endl;
-  
+
 
   #pragma omp parallel for
   for(int l=0; l<LT; l++)
@@ -332,7 +332,7 @@ int main(int narg,char **arg)
     P2 = norm4(ap);
     PxSINP = P2;
     Np0 = 4.0 - count(ap.begin(), ap.end(), 0.0);
-    
+
     Real eps=
 #if SIMD_INST_SET == FLOAt128
       1.0e-28
@@ -452,7 +452,7 @@ int main(int narg,char **arg)
     {
       if(eq) ind_imom = imom;
       else   ind_imom = tag_list[imom];
-      
+
       DeltaG_file[iRC]<<(double)DeltaG_moms[ind_imom][iRC]<<endl;
       DeltaZ_file[iRC]<<(double)DeltaZ_moms[ind_imom][iRC]<<endl;
     }
