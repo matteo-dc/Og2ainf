@@ -306,7 +306,7 @@ int main(int narg,char **arg)
     kt4_v[l] = kt2_v[l]*kt2_v[l];
     kt6_v[l] = kt4_v[l]*kt2_v[l];
 
-    j[l] = 1.0 - cos(2.0*M_PI/dim[p]*(i+0.5));
+    j[l] = 1.0 - al*cos(2.0*M_PI/dim[p]*(i+0.5));
 
     s_v[l]    = sin(k[l]/2.0);
     ss_v[l]   = sin(k[l]);
