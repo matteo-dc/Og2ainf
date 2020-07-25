@@ -216,6 +216,9 @@ void read_input_glb(const char path[])
     else if(alpha==1.0) printf("Feynman\n");
     else {printf("NOT VALID!"); exit(0);}
 
+    printf("\n");
+    printf("Using parameter al = %lf\n",al);
+
 
     printf("\n\n");
 }
